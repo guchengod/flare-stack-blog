@@ -3,11 +3,7 @@ import { z } from "zod";
 import { serverEnv } from "@/lib/env/server.env";
 import { adminMiddleware } from "@/lib/middlewares";
 import { GetOAuthClientMetadataInputSchema } from "../../oauth-clients/schema/oauth-client.schema";
-import * as OAuthClientService from "../../oauth-clients/service/oauth-client.service";
-import {
-  getOAuthHelpers,
-  OAUTH_PROVIDER_CONSENT_PAGE,
-} from "../oauth-provider.config";
+import { OAUTH_PROVIDER_CONSENT_PAGE } from "../oauth-provider.shared";
 
 const CompleteOAuthConsentInputSchema = z.object({
   accept: z.boolean(),
@@ -20,9 +16,13 @@ export const getOAuthClientMetadataFn = createServerFn({
 })
   .middleware([adminMiddleware])
   .inputValidator(GetOAuthClientMetadataInputSchema)
-  .handler(({ context, data }) =>
-    OAuthClientService.getOAuthClientMetadata(context, data.clientId),
-  );
+  .handler(async ({ context, data }) => {
+    const OAuthClientService = await import(
+      "../../oauth-clients/service/oauth-client.service"
+    );
+
+    return OAuthClientService.getOAuthClientMetadata(context, data.clientId);
+  });
 
 export const completeOAuthConsentFn = createServerFn({
   method: "POST",
@@ -30,6 +30,7 @@ export const completeOAuthConsentFn = createServerFn({
   .middleware([adminMiddleware])
   .inputValidator(CompleteOAuthConsentInputSchema)
   .handler(async ({ context, data }) => {
+    const { getOAuthHelpers } = await import("../oauth-provider.config");
     const oauth = getOAuthHelpers(context.env);
     const consentUrl = new URL(
       `${OAUTH_PROVIDER_CONSENT_PAGE}?${data.oauthQuery}`,

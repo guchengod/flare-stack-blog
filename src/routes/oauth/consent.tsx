@@ -26,7 +26,7 @@ import {
   completeOAuthConsentFn,
   getOAuthClientMetadataFn,
 } from "@/features/oauth-provider/api/oauth-provider.api";
-import { OAUTH_MANAGED_SCOPES } from "@/features/oauth-provider/oauth-provider.config";
+import { OAUTH_MANAGED_SCOPES } from "@/features/oauth-provider/oauth-provider.shared";
 import { cn } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 

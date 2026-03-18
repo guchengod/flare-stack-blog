@@ -1,5 +1,5 @@
-import type { OAuthScope } from "../oauth-provider.config";
-import { OAUTH_PROVIDER_SCOPES } from "../oauth-provider.config";
+import type { OAuthScope } from "../oauth-provider.shared";
+import { OAUTH_PROVIDER_SCOPES } from "../oauth-provider.shared";
 import type {
   OAuthPrincipal,
   OAuthScopeRequest,

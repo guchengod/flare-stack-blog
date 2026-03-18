@@ -26,7 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { OAUTH_MANAGED_SCOPES } from "@/features/oauth-provider/oauth-provider.config";
+import { OAUTH_MANAGED_SCOPES } from "@/features/oauth-provider/oauth-provider.shared";
 import { formatDate } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 import { useOAuthClients } from "../hooks/use-oauth-clients";
